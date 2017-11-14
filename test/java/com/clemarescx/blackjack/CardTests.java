@@ -6,6 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.*;
 
 /**
@@ -36,7 +40,19 @@ public class CardTests {
     }
 
     @Test
-    public void equalityNotByReference(){
+    public void equalityByValue(){
         assertEquals(new Card("D","K"),new Card("D","K"));
     }
+
+    @Test
+    public void cardTostringEqualsOriginatingToken() {
+        DeckLoader loader = new DeckLoader();
+        String[] validTokens = loader.generateValidDeckTokens();
+        List<String> comparisonList = loader.parseTokensToDeck(validTokens).getAvailableCards()
+                .stream()
+                .map(Card::toString)
+                .collect(Collectors.toList());
+        Arrays.asList(validTokens).forEach(token -> assertTrue( comparisonList.contains(token)));
+    }
+
 }

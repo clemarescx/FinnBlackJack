@@ -1,7 +1,6 @@
 package com.clemarescx.blackjack;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -9,7 +8,7 @@ import java.util.Random;
  */
 public class Deck implements IDeck {
 
-    private ArrayList<Card> available;
+    private final ArrayList<Card> available;
 
     Deck(ArrayList<Card> cards) {
         available = cards;
@@ -25,16 +24,15 @@ public class Deck implements IDeck {
             available.set(from, available.get(to));
             available.set(to, temp);
         }
-        for(int i = available.size()-1; i >= 0; i--){
-            System.out.printf("%s ",available.get(i));
+        for (int i = available.size() - 1; i >= 0; i--) {
+            System.out.printf("%s ", available.get(i));
         }
         System.out.println();
     }
 
     @Override
     public Card pickTopCard() {
-        Card pickedCard = available.remove(available.size() - 1);
-        return pickedCard;
+        return available == null || available.isEmpty() ? null : available.remove(available.size() - 1);
     }
 
     @Override
@@ -42,7 +40,7 @@ public class Deck implements IDeck {
         available.add(c);
     }
 
-    public ArrayList<Card> getAvailableCards() {
+    ArrayList<Card> getAvailableCards() {
         return available;
     }
 }

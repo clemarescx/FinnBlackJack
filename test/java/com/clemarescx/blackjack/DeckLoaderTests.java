@@ -54,10 +54,6 @@ public class DeckLoaderTests {
     }
 
     @Test
-    public void generateDeck() {
-    }
-
-    @Test
     public void generateValidDeckTokens() {
         ArrayList<String> colors = new ArrayList<>(GameValues.colorSet);
         ArrayList<String> faces = new ArrayList<>(GameValues.faceSet.keySet());
@@ -82,6 +78,7 @@ public class DeckLoaderTests {
 
     @Test
     public void tokensWithWrongFormatAreNotValidForParsing() {
+
         invalidStringOfTokensList.stream()
                 .map( stringOfTokens -> loader.tokenize(stringOfTokens))
                 .forEach( tokenList -> assertFalse(loader.validForParsing(tokenList)));

@@ -6,22 +6,22 @@ import java.util.ArrayList;
  * Created by Clem on 13/11/2017.
  */
 public class Player {
-    String name;
-    ArrayList<Card> hand;
-    private int startWinScore;
+    final String name;
+    private final ArrayList<Card> hand;
+    private final int startWinScore;
+
+    public Player(String name) {
+        this(name, 0);
+    }
 
     public Player(String name, int startWinScore){
         this.name = name;
         this.startWinScore = startWinScore;
-        hand = new ArrayList<Card>();
+        hand = new ArrayList<>();
     }
 
-    protected void addCardToHand(Card c){
+    void addCardToHand(Card c){
         getHand().add(c);
-    }
-
-    protected void resetHand(){
-        getHand().clear();
     }
 
     public ArrayList<Card> getHand() {
@@ -31,4 +31,5 @@ public class Player {
     public int getStartWinScore() {
         return startWinScore;
     }
+
 }

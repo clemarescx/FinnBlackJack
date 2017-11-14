@@ -4,20 +4,21 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
  * Class to generate example decks: one "ordered" and one shuffled
  */
-public class Helper {
-    private static DeckLoader loader = new DeckLoader();
+class Helper {
+    private static final DeckLoader loader = new DeckLoader();
 
     public static void main(String[] args) {
         writeOrderedDeckFile();
         writeShuffledDeckFile();
     }
 
+    // Not really "ordered" per se, but with a
+    // recognisable and reoccuring pattern
     private static void writeOrderedDeckFile() {
         ArrayList<Card> orderedDeck =
                 loader.generateOrderedDeck()
@@ -35,26 +36,26 @@ public class Helper {
 
 
     private static void writeToFile(ArrayList<Card> cards, String filepath) {
-        BufferedWriter bwriter = null;
-        FileWriter fwriter = null;
+        BufferedWriter bWriter = null;
+        FileWriter fWriter = null;
 
         String fileContent = cards.stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(", "));
 
         try {
-            fwriter = new FileWriter(filepath);
-            bwriter = new BufferedWriter(fwriter);
-            bwriter.write(fileContent);
+            fWriter = new FileWriter(filepath);
+            bWriter = new BufferedWriter(fWriter);
+            bWriter.write(fileContent);
         } catch (IOException ex) {
             ex.getMessage();
             ex.printStackTrace();
         } finally {
             try {
-                if (bwriter != null)
-                    bwriter.close();
-                if (fwriter != null)
-                    fwriter.close();
+                if (bWriter != null)
+                    bWriter.close();
+                if (fWriter != null)
+                    fWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

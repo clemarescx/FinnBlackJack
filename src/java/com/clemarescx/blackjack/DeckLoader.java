@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by Clem on 13/11/2017.
  */
-public class DeckLoader {
+class DeckLoader {
     private Deck deck = null;
 
     public DeckLoader() {
@@ -60,15 +60,8 @@ public class DeckLoader {
     }
 
     public boolean validForParsing(String[] tokens) {
-        if (!hasValidCardCount(tokens)) {
-            System.out.printf("Deck contains an invalid number of cards ");
-            System.out.printf("(found: %d, expected: 52)\n", tokens.length);
-            return false;
-        }
+        return hasValidCardCount(tokens) && containsOnlyValidTokens(tokens);
 
-        if (!containsOnlyValidTokens(tokens))
-            return false;
-        return true;
     }
 
     public String[] tokenize(String tokenString) {

@@ -45,7 +45,7 @@ public class CardTests {
     }
 
     @Test
-    public void cardTostringEqualsOriginatingToken() {
+    public void cardToStringEqualsOriginatingToken() {
         DeckLoader loader = new DeckLoader();
         String[] validTokens = loader.generateValidDeckTokens();
         List<String> comparisonList = loader.parseTokensToDeck(validTokens).getAvailableCards()

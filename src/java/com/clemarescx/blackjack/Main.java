@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * Created by Clem on 11/11/2017.
  */
-public class Main {
+class Main {
     public static void main(String[] args) {
         System.out.println("Welcome to Finn BlackJack!");
 

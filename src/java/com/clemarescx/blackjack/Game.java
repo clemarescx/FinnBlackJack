@@ -6,14 +6,13 @@ import java.util.stream.Collectors;
 /**
  * Created by Clem on 13/11/2017.
  */
-public class Game {
+class Game {
     private IDeck deck;
     private Player sam, dealer, winner;
     private Player[] players;
 
     Game(IDeck deck) {
         this.deck = deck;
-//        setup();
     }
 
     public Game() {
@@ -26,41 +25,36 @@ public class Game {
         dealer = new Player("dealer", 22);
         players = new Player[]{sam, dealer};
         for (int i = 0; i < 2; i++) {
-            for(Player p : players)
+            for (Player p : players)
                 p.addCardToHand(deck.pickTopCard());
         }
 
     }
 
+    /**
+     * main game "loop" (only runs once)
+     */
     void run() {
 
-        if(wonBeforeStart())return;
-        /*for(Player p : players)
-            if(hasBlackJack(p)){
-                winner = p;
-                return;
-            }*/
+        if (wonBeforeStart()) return;
+
         pickCardsWhileUnderTargetScore(sam, 17);
 
-        if(getScore(sam) > 21)        {
+        if (getScore(sam) > 21) {
             winner = dealer;
             return;
         }
 
         pickCardsWhileUnderTargetScore(dealer, getScore(sam) + 1);
 
-        if(getScore(dealer) > 21)
+        if (getScore(dealer) > 21)
             winner = sam;
         else
             winner = dealer;
     }
 
-    private boolean hasBlackJack(Player p) {
-        return getScore(p) == 21;
-    }
-
     private void pickCardsWhileUnderTargetScore(Player player, int target) {
-        while(getScore(player) < target )
+        while (getScore(player) < target)
             player.addCardToHand(deck.pickTopCard());
     }
 
@@ -80,19 +74,19 @@ public class Game {
         return getScore(p) == p.getStartWinScore() && getScore(p) == getScore(other);
     }
 
-    private int getScore(Player p) {
+    int getScore(Player p) {
         return p.getHand().stream()
                 .mapToInt(card -> GameValues.getFaceValue(card.face))
                 .sum();
     }
 
-    Player getOpponent(Player p) {
+    private Player getOpponent(Player p) {
         if (p.equals(sam))
             return dealer;
         return sam;
     }
 
-    public void printScores() {
+    void printScores() {
         System.out.println(winner.name);
         for (Player p : players) {
             String gameHandHistory = p.getHand().stream()
@@ -102,11 +96,22 @@ public class Game {
         }
     }
 
+    /**
+     * Methods used in tests
+     */
     public Player getWinner() {
         return winner;
     }
 
     public void setDeck(Deck deck) {
         this.deck = deck;
+    }
+
+    public Player getSam() {
+        return sam;
+    }
+
+    public Player getDealer() {
+        return dealer;
     }
 }

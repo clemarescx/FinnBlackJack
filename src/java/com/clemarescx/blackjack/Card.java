@@ -6,8 +6,8 @@ package com.clemarescx.blackjack;
  */
 public class Card {
 
-    protected final String color;
-    protected final String face;
+    final String color;
+    final String face;
 
     Card(String color, String face) {
         this.color = color;

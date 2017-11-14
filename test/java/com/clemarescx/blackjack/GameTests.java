@@ -4,10 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -15,50 +13,67 @@ import static org.junit.Assert.*;
  */
 public class GameTests {
 
-    DeckLoader loader;
+    private DeckLoader loader;
+    private Game game;
 
 
-    /**
-     * REMEMBER:
-     */
     @Before
     public void setup(){
         loader = new DeckLoader();
+        game = new Game();
 
     }
 
     @After
     public void tearDown(){
         loader = null;
+        game = null;
     }
 
     @Test
-    public void SamWinsIfBothPlayersStartWith21(){
-        String[] tokens = loader.tokenize("H10,HJ,HQ,SK,HK,CK,DA,SA");
-        Arrays.asList(tokens).forEach(c -> System.out.printf("%s ", c));
-        String reversed = Arrays.stream(tokens)
-                .reduce( "", (current, total)->  total +", " + current);
-        System.out.println("Reversed: " + reversed);
+    public void SamWinsIfBothPlayersStartWithScore21() {
+        Deck deck = getDeckFromValidStringOfTokens("HK,CK,DA,SA,H10,HJ,HQ,SK");
 
-        Deck deck = loader.parseTokensToDeck(tokens);
-        Game game = new Game(deck);
+        game.setDeck(deck);
         game.setup();
         game.run();
         Player winner = game.getWinner();
-        game.printScores();
+
         assertTrue(winner.name.trim().toLowerCase().equals("sam"));
+        assertTrue(game.getScore(game.getDealer()) == 21);
+        assertEquals(game.getScore(game.getSam()), game.getScore(game.getDealer()));
+
     }
 
     @Test
-    public void DealerWinsIfBothPlayersStartWith22(){
-        String[] tokens = loader.tokenize("CK,HK,DK,SK,CA,HA,DA,SA");
-        Deck deck = loader.parseTokensToDeck(tokens);
-        Game game = new Game(deck);
+    public void DealerWinsIfBothPlayersStartWithScore22() {
+        Deck deck = getDeckFromValidStringOfTokens("CA,HA,DA,SA,CK,HK,DK,SK");
+
+        game.setDeck(deck);
         game.setup();
         game.run();
         Player winner = game.getWinner();
+
         assertTrue(winner.name.trim().toLowerCase().equals("dealer"));
+        assertTrue(game.getScore(game.getDealer()) == 22);
+        assertEquals(game.getScore(game.getSam()), game.getScore(game.getDealer()));
     }
 
+    @Test
+    public void getScoreGivesExpectedScore() {
+        Deck deck = getDeckFromValidStringOfTokens("CA,HA,DA");
+        Player p = new Player("scoreTest_player");
+        for (Card c : deck.getAvailableCards())
+            p.addCardToHand(c);
+        assertEquals(p.getHand().size(), 3);
+        assertEquals(game.getScore(p), 33); // 3x aces: 11 x 3
+    }
+
+    // local helper method
+    private Deck getDeckFromValidStringOfTokens(String tokenString) {
+        String[] tokens = loader.tokenize(tokenString);
+        tokens = loader.reverseTokenOrder(tokens);
+        return loader.parseTokensToDeck(tokens);
+    }
 
 }

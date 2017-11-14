@@ -10,11 +10,5 @@ public interface IDeck {
 
     public Card pickTopCard();
 
-    public boolean isEmpty();
-
-    public void reset();
-
     void addCard(Card c);
-
-    void addCards(Collection<Card> cards);
 }

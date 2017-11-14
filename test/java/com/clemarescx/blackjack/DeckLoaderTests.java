@@ -1,15 +1,16 @@
 package com.clemarescx.blackjack;
 
-import com.clemarescx.blackjack.DeckLoader;
-import com.clemarescx.blackjack.GameValues;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.*;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
 
 
 /**
@@ -18,13 +19,13 @@ import static org.junit.Assert.*;
 public class DeckLoaderTests {
     private DeckLoader loader;
 
-    private ArrayList<String> invalidLists;
+    private ArrayList<String> invalidStringOfTokensList;
     private String[] validTokens;
 
     @Before
     public void setup(){
         loader = new DeckLoader();
-        invalidLists =
+        invalidStringOfTokensList =
                 new ArrayList<>(Arrays.asList(
                         "H4, B4",
                         "H4, B11",
@@ -37,7 +38,7 @@ public class DeckLoaderTests {
     @After
     public void tearDown(){
         loader = null;
-        invalidLists = null;
+        invalidStringOfTokensList = null;
         validTokens = null;
     }
 
@@ -69,27 +70,37 @@ public class DeckLoaderTests {
     }
 
     @Test
-    public void parseTokensToDeck() {
+    public void cardsInGeneratedDeckContainSameValueAsToken() {
+        Deck deck = loader.parseTokensToDeck(validTokens);
+        List<String> comparisonList =  deck.getAvailableCards().stream()
+                .map(card -> card.color + card.face)
+                .filter( cardToken -> Arrays.asList(validTokens).contains(cardToken))
+        .collect(Collectors.toList());
+        assertEquals(comparisonList.size(), validTokens.length);
+    }
+
+
+    @Test
+    public void tokensWithWrongFormatAreNotValidForParsing() {
+        invalidStringOfTokensList.stream()
+                .map( stringOfTokens -> loader.tokenize(stringOfTokens))
+                .forEach( tokenList -> assertFalse(loader.validForParsing(tokenList)));
     }
 
     @Test
-    public void validForParsing() {
+    public void correctStringListOfTokensValidForParsing() {
+        assertTrue(loader.validForParsing(validTokens));
     }
 
     @Test
-    public void tokenize() {
-    }
-
-    @Test
-    public void containsOnlyValidTokens() {
-
+    public void generatedTokensContainsOnlyValidTokens() {
         assertTrue(loader.containsOnlyValidTokens(validTokens));
     }
 
     @Test
     public void isValidTokenForCard() {
         Arrays.stream(validTokens)
-                .forEach(token -> assertTrue(loader.isValidTokenForCard(token)));
+                .forEach(token -> assertTrue(loader.isValidCardToken(token)));
     }
 
 

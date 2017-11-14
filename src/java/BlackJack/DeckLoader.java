@@ -1,5 +1,7 @@
 package BlackJack;
 
+import java.util.ArrayList;
+
 /**
  * Created by Clem on 13/11/2017.
  */
@@ -10,8 +12,12 @@ public class DeckLoader {
     public DeckLoader() {    }
 
     private Deck generateDeck() {
-        Deck generatedDeck = new Deck();
-
+        ArrayList<Card> cards = new ArrayList<>();
+        for(String color : GameValues.colorSet)
+        for(String face : GameValues.faceSet.keySet())
+            cards.add(new Card(color,face));
+        Deck generatedDeck = new Deck(cards);
+        generatedDeck.shuffle();
         return generatedDeck;
     }
 
@@ -33,8 +39,15 @@ public class DeckLoader {
 
     }
 
-    private Deck parseTokensToDeck(String[] tokens) {
-        return null;
+    public Deck parseTokensToDeck(String[] tokens) {
+        ArrayList<Card> cards = new ArrayList<>();
+        for(String t : tokens){
+            String color = t.substring(0,1);
+            String face = t.substring(1);
+            cards.add(new Card(color,face));
+        }
+
+        return new Deck(cards);
     }
 
     private boolean validForParsing(String[] tokens) {

@@ -1,20 +1,13 @@
 package BlackJack;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Clem on 13/11/2017.
  */
 public class Card {
 
-
-
-
-    public String color;
-    public String face;
+    public final String color;
+    public final String face;
 
     Card(String color, String face) {
         this.color = color;

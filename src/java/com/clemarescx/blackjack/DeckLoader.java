@@ -1,6 +1,9 @@
 package com.clemarescx.blackjack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Clem on 13/11/2017.
@@ -8,7 +11,8 @@ import java.util.ArrayList;
 public class DeckLoader {
     private Deck deck = null;
 
-    public DeckLoader() { }
+    public DeckLoader() {
+    }
 
     public Deck generateOrderedDeck() {
         String[] generatedTokens = generateValidDeckTokens();
@@ -37,10 +41,10 @@ public class DeckLoader {
         if (null == tokenString || "".equals(tokenString)) return;
 
         String[] tokens = tokenize(tokenString);
+        tokens = reverseTokenOrder(tokens);
 
         if (!validForParsing(tokens))
             return;
-
         deck = parseTokensToDeck(tokens);
     }
 
@@ -57,8 +61,8 @@ public class DeckLoader {
 
     public boolean validForParsing(String[] tokens) {
         if (!hasValidCardCount(tokens)) {
-            System.out.printf("Deck contains an invalid number of cards\n");
-            System.out.printf("(found: %d, expected: 52)", tokens.length);
+            System.out.printf("Deck contains an invalid number of cards ");
+            System.out.printf("(found: %d, expected: 52)\n", tokens.length);
             return false;
         }
 
@@ -71,13 +75,19 @@ public class DeckLoader {
         return tokenString.trim().toUpperCase().split(" *, *");
     }
 
+    public String[] reverseTokenOrder(String[] tokens) {
+        List<String> readTokens = Arrays.asList(tokens);
+        Collections.reverse(readTokens);
+        return readTokens.toArray(new String[tokens.length]);
+    }
+
     private boolean hasValidCardCount(String[] tokens) {
         return tokens.length == 52;
     }
 
     public boolean containsOnlyValidTokens(String[] tokens) {
         for (String t : tokens) {
-            if (!isValidTokenForCard(t)) {
+            if (!isValidCardToken(t)) {
                 System.out.println(t + " is not a valid card token.");
                 return false;
             }
@@ -85,7 +95,7 @@ public class DeckLoader {
         return true;
     }
 
-    public boolean isValidTokenForCard(String t) {
+    public boolean isValidCardToken(String t) {
         if (t.length() < 2) return false;
 
         String color = t.substring(0, 1);

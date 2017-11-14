@@ -8,13 +8,17 @@ import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
- * Created by Clem on 14/11/2017.
+ * Class to generate example decks: one "ordered" and one shuffled
  */
 public class Helper {
     private static DeckLoader loader = new DeckLoader();
 
+    public static void main(String[] args) {
+        writeOrderedDeckFile();
+        writeShuffledDeckFile();
+    }
 
-    public static void writeOrderedDeckFile(){
+    private static void writeOrderedDeckFile() {
         ArrayList<Card> orderedDeck =
                 loader.generateOrderedDeck()
                         .getAvailableCards();
@@ -22,38 +26,34 @@ public class Helper {
         writeToFile(orderedDeck, "ordered_deck.txt");
     }
 
-    public static void writeShuffledDeckFile(){
+    private static void writeShuffledDeckFile() {
         Deck deck = loader.generateOrderedDeck();
         deck.shuffle();
         ArrayList<Card> shuffledCards = deck.getAvailableCards();
         writeToFile(shuffledCards, "shuffled_deck.txt");
     }
 
-    public static void main(String[] args) {
-        writeOrderedDeckFile();
-        writeShuffledDeckFile();
-    }
 
-    private static void writeToFile(ArrayList<Card> cards, String filepath){
+    private static void writeToFile(ArrayList<Card> cards, String filepath) {
         BufferedWriter bwriter = null;
-        FileWriter  fwriter = null; ;
+        FileWriter fwriter = null;
 
         String fileContent = cards.stream()
                 .map(Card::toString)
                 .collect(Collectors.joining(", "));
 
-        try{
+        try {
             fwriter = new FileWriter(filepath);
-            bwriter = new BufferedWriter( fwriter);
+            bwriter = new BufferedWriter(fwriter);
             bwriter.write(fileContent);
-        } catch (IOException ex){
+        } catch (IOException ex) {
             ex.getMessage();
             ex.printStackTrace();
         } finally {
             try {
-                if(bwriter != null)
+                if (bwriter != null)
                     bwriter.close();
-                if(fwriter != null)
+                if (fwriter != null)
                     fwriter.close();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -8,9 +8,9 @@ import java.util.Set;
 /**
  * Created by Clem on 14/11/2017.
  */
-public class GameValues {
-    public final static Set<String> colorSet = new HashSet<>(Arrays.asList("C", "D", "H", "S"));
-    public final static HashMap<String, Integer> faceSet = new HashMap<>();
+class GameValues {
+    final static Set<String> colorSet = new HashSet<>(Arrays.asList("C", "D", "H", "S"));
+    final static HashMap<String, Integer> faceSet = new HashMap<>();
 
     static {
         faceSet.put("2", 2);
@@ -26,5 +26,8 @@ public class GameValues {
         faceSet.put("Q", 10);
         faceSet.put("K", 10);
         faceSet.put("A", 11);
+    }
+    public static int getFaceValue(String key){
+        return faceSet.get(key);
     }
 }

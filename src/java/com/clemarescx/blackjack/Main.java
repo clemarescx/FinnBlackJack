@@ -19,7 +19,9 @@ public class Main {
 
 
         Game game = new Game(loader.getDeck());
-        game.start();
+        game.setup();
+        game.run();
+        game.printScores();
 
     }
 

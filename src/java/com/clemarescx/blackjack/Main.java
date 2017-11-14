@@ -1,4 +1,4 @@
-package BlackJack;
+package com.clemarescx.blackjack;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,7 +12,7 @@ public class Main {
         System.out.println("Welcome to Finn BlackJack!");
 
         DeckLoader loader = new DeckLoader();
-        if(args.length > 0){
+        if (args.length > 0) {
             String tokenString = loadFileContents(args[0]);
             loader.loadTokens(tokenString);
         }
@@ -26,12 +26,12 @@ public class Main {
     private static String loadFileContents(String filePath) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.setLength(52 * 4); // expected 52 cards * 4 chars per token
-        try{
+        try {
             Scanner scanner = new Scanner(new FileReader(filePath));
-            while(scanner.hasNext()){
+            while (scanner.hasNext()) {
                 stringBuilder.append(scanner.nextLine());
             }
-        } catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
         return stringBuilder.toString();

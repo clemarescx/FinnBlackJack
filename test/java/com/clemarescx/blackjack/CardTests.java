@@ -1,24 +1,31 @@
-package BlackJack;
+package com.clemarescx.blackjack;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import com.clemarescx.blackjack.Card;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by Clem on 13/11/2017.
  */
 public class CardTests {
 
-    private static Card tested_card;
-    @BeforeAll
-    static void setup(){
+    private Card tested_card;
+    @Before
+    public void setup(){
         tested_card = new Card("H","J");
     }
 
+    @After
+    public void tearDown(){
+        tested_card = null;
+    }
+
     @Test
-    void card_sameAttributeComparison(){
+    public void sameAttributeComparison(){
         Card card_same_values = new Card("H","J");
         Card card_same_values2 = new Card(tested_card.color,tested_card.face);
 
@@ -29,7 +36,7 @@ public class CardTests {
     }
 
     @Test
-    void card_equalityNotByReference(){
+    public void equalityNotByReference(){
         assertEquals(new Card("D","K"),new Card("D","K"));
     }
 }

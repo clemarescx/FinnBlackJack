@@ -1,4 +1,4 @@
-package BlackJack;
+package com.clemarescx.blackjack;
 
 
 /**
@@ -26,7 +26,7 @@ public class Card {
 
     @Override
     public boolean equals(Object obj) {
-        if( !(obj instanceof Card))
+        if (!(obj instanceof Card))
             return false;
         Card other = (Card) obj;
         return this.hashCode() == other.hashCode();

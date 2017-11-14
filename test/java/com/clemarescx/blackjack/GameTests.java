@@ -1,6 +1,7 @@
-package BlackJack;
+package com.clemarescx.blackjack;
 
-import org.junit.jupiter.api.BeforeAll;
+
+import com.clemarescx.blackjack.Game;
 
 /**
  * Created by Clem on 13/11/2017.

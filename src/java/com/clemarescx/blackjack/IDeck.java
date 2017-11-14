@@ -1,4 +1,4 @@
-package BlackJack;
+package com.clemarescx.blackjack;
 
 import java.util.Collection;
 
@@ -7,8 +7,11 @@ import java.util.Collection;
  */
 public interface IDeck {
     public void shuffle();
+
     public Card pickTopCard();
+
     public boolean isEmpty();
+
     public void reset();
 
     void addCard(Card c);

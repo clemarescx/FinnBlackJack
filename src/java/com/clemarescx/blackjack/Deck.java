@@ -1,4 +1,4 @@
-package BlackJack;
+package com.clemarescx.blackjack;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,5 +61,9 @@ public class Deck implements IDeck {
     public void addCards(Collection<Card> cards){
         for(Card c : cards)
             addCard(c);
+    }
+
+    public ArrayList<Card> getAvailableCards(){
+        return available;
     }
 }

@@ -9,8 +9,6 @@ import java.util.Scanner;
  */
 class Blackjack {
     public static void main(String[] args) {
-        System.out.println("Welcome to Finn BlackJack!");
-
         DeckLoader loader = new DeckLoader();
         if (args.length > 0) {
             String tokenString = loadFileContents(args[0]);

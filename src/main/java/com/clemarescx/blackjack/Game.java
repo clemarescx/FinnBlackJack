@@ -92,7 +92,7 @@ class Game {
             String gameHandHistory = p.getHand().stream()
                     .map(Card::toString)
                     .collect(Collectors.joining(", "));
-            System.out.printf("%s: %s (score: %d)\n", p.name, gameHandHistory, getScore(p));
+            System.out.printf("%s: %s\n", p.name, gameHandHistory);
         }
     }
 

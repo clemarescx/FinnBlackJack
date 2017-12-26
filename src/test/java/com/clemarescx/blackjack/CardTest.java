@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Clem on 13/11/2017.
  */
-public class CardTests {
+public class CardTest {
 
     private Card tested_card;
     @Before

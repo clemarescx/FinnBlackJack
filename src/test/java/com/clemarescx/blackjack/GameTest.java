@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Clem on 13/11/2017.
  */
-public class GameTests {
+public class GameTest {
 
     private DeckLoader loader;
     private Game game;

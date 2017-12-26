@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Clem on 13/11/2017.
  */
-public class DeckLoaderTests {
+public class DeckLoaderTest {
     private DeckLoader loader;
 
     private ArrayList<String> invalidStringOfTokensList;
